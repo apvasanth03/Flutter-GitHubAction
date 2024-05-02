@@ -7,16 +7,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout
       - uses: actions/checkout@v3
 
+      # Setup Flutter
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           flutter-version: 3.19.6
           cache: true
 
-      - name: Get dependencies
-        run: flutter pub get
+      # Install Melos
+      - name: Install Melos
+        run: dart pub global activate melos
 
+      # Bootstrap Melos
+      - name: Bootstrap Melos
+        run: melos bootstrap
+      
+      # Analyze
       - name: Analyze
-        run: flutter analyze
+        run: melos analyze
